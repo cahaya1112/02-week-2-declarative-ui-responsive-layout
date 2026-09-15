@@ -115,28 +115,47 @@ class _RuangPraktikumState extends State<RuangPraktikum> {
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Row(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final bool isWide = constraints.maxWidth >= 700;
+
+                    if (isWide) {
+                      // Layout tablet/desktop: grid 2x2, mengisi penuh layar, tanpa scroll
+                      return Column(
                         children: [
-                          Expanded(child: _SesiCard(sesi: daftarSesi[0])),
-                          const SizedBox(width: 12),
-                          Expanded(child: _SesiCard(sesi: daftarSesi[1])),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(child: _SesiCard(sesi: daftarSesi[0])),
+                                const SizedBox(width: 12),
+                                Expanded(child: _SesiCard(sesi: daftarSesi[1])),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(child: _SesiCard(sesi: daftarSesi[2])),
+                                const SizedBox(width: 12),
+                                Expanded(child: _SesiCard(sesi: daftarSesi[3])),
+                              ],
+                            ),
+                          ),
                         ],
+                      );
+                    }
+
+                    // Layout HP: 1 kolom, boleh scroll jika kepanjangan
+                    return ListView.separated(
+                      itemCount: daftarSesi.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      itemBuilder: (context, index) => SizedBox(
+                        height: 170,
+                        child: _SesiCard(sesi: daftarSesi[index]),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(child: _SesiCard(sesi: daftarSesi[2])),
-                          const SizedBox(width: 12),
-                          Expanded(child: _SesiCard(sesi: daftarSesi[3])),
-                        ],
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ],
