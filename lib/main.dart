@@ -4,9 +4,24 @@ import 'modul_02/academic_dashboard_screen.dart';
 import 'modul_03/modul_03_app.dart';
 import 'modul_04/modul_04_app.dart';
 import 'modul_02/Studi Kasus/ruangpraktikum.dart';
-
+import 'widgets/room_session_card.dart';
+import 'models/room_session.dart';
 void main() {
-  runApp(const PoliwangiStarterApp());
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: RoomSessionCard(
+              session: dummyRoomSessions[2],
+              onTap: () {},
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class PoliwangiStarterApp extends StatelessWidget {
