@@ -1,45 +1,68 @@
 import 'package:flutter/material.dart';
 import 'modul_01/profile_screen.dart';
-import 'modul_02/academic_dashboard_screen.dart';
+import 'modul02/academic_dashboard_screen.dart';
 import 'modul_03/modul_03_app.dart';
 import 'modul_04/modul_04_app.dart';
-import 'modul_02/Studi Kasus/ruangpraktikum.dart';
-import 'widgets/room_session_card.dart';
-import 'models/room_session.dart';
+import 'modul02/studi_kasus/ruang_praktikum.dart';
 void main() {
-  runApp(
-    MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: RoomSessionCard(
-              session: dummyRoomSessions[2],
-              onTap: () {},
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
+  runApp(const RuangKitaApp());
 }
 
-class PoliwangiStarterApp extends StatelessWidget {
-  const PoliwangiStarterApp({super.key});
+const List<Color> seedColorByDigit = [
+  Colors.red,
+  Colors.pink,
+  Colors.purple,
+  Colors.indigo,
+  Colors.blue,
+  Colors.cyan,
+  Colors.green,
+  Colors.lime,
+  Colors.teal,
+  Colors.orange,
+];
+
+class RuangKitaApp extends StatefulWidget {
+  const RuangKitaApp({super.key});
+
+  @override
+  State<RuangKitaApp> createState() => _RuangKitaAppState();
+}
+
+class _RuangKitaAppState extends State<RuangKitaApp> {
+  bool isDarkMode = false;
+
+  void toggleTheme() {
+    setState(() {
+      isDarkMode = !isDarkMode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final Color seedColor = seedColorByDigit[8];
+
     return MaterialApp(
+      title: 'RuangKita',
       debugShowCheckedModeBanner: false,
-      title: 'Poliwangi Mobile Codelabs 2026',
       theme: ThemeData(
+        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF0284C7),
+          seedColor: seedColor,
           brightness: Brightness.light,
         ),
-        useMaterial3: true,
       ),
-      home: const RuangPraktikum(),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: seedColor,
+          brightness: Brightness.dark,
+        ),
+      ),
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      home: RuangPraktikum(
+        isDarkMode: isDarkMode,
+        onToggleTheme: toggleTheme,
+      ),
     );
   }
 }
